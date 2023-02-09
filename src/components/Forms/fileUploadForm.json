@@ -1,0 +1,16 @@
+[
+  {
+    "isRequired": true,
+    "element": "file",
+    "name": "file",
+    "type": "file",
+    "label": "Upload File",
+    "htmlFor": "Upload File"
+  },
+  {
+    "isRequired": false,
+    "element": "input",
+    "name": "user_id",
+    "type": "hidden"
+  }
+]

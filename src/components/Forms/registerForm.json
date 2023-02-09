@@ -1,0 +1,38 @@
+[
+  {
+    "isRequired": true,
+    "element": "input",
+    "name": "firstName",
+    "type": "text",
+    "label": "First Name",
+    "htmlFor": "firstName",
+    "placeholder": "Enter First Name"
+  },
+  {
+    "isRequired": true,
+    "element": "input",
+    "name": "lastName",
+    "type": "text",
+    "label": "Last Name",
+    "htmlFor": "lastName",
+    "placeholder": "Enter Last Name"
+  },
+  {
+    "isRequired": true,
+    "element": "input",
+    "name": "email",
+    "type": "email",
+    "label": "Email",
+    "htmlFor": "email",
+    "placeholder": "Enter Email"
+  },
+  {
+    "isRequired": true,
+    "element": "input",
+    "name": "password",
+    "type": "password",
+    "label": "Password",
+    "htmlFor": "password",
+    "placeholder": "Password"
+  }
+]

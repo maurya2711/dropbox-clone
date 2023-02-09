@@ -1,0 +1,20 @@
+[
+  {
+    "isRequired": true,
+    "element": "input",
+    "name": "email",
+    "type": "email",
+    "label": "Email",
+    "htmlFor": "email",
+    "placeholder": "Enter Email"
+  },
+  {
+    "isRequired": true,
+    "element": "input",
+    "name": "password",
+    "type": "password",
+    "label": "Password",
+    "htmlFor": "password",
+    "placeholder": "Password"
+  }
+]
