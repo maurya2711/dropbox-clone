@@ -35,16 +35,14 @@ const authReducer = (state = initialState, action) =>
       case actions.AUTH_STATUS:
         data.isAuthenticated = true;
         break;
-      case actions.LOGOUT_SUCCESS:
-        data.user = null;
-        data.isAuthenticated = false;
-        break;
       case actions.LOADING_STATUS:
         data.isLoading = payload;
         break;
       case actions.UPLOADED_FILES:
         data.uploadedFiles = payload;
         break;
+      case actions.LOGOUT_SUCCESS:
+        return initialState;
       default:
         return { ...state };
     }

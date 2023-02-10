@@ -11,11 +11,12 @@ import { FileSchema } from "../../utility/schema/FileSchema";
 import { Box, FormLabel, Button } from "@mui/material";
 import { actions, AuthContext } from "../../contexts/authContext";
 import useFetch from "../../hooks/useFetch";
+import { LoadingButton } from "@mui/lab";
 
 const UploadFile = (props) => {
-  const { openEditForm, setOpenEditForm, selectedId, setSelectedId } = props;
+  const { setOpenEditForm, selectedId, setSelectedId } = props;
   const { state, dispatch } = React.useContext(AuthContext);
-  const { user } = state;
+  const { user, isLoading } = state;
 
   const { trigger: uploadTrigger } = useMutation(
     GLOBALS.API.UPLOAD_FILE,
@@ -49,7 +50,10 @@ const UploadFile = (props) => {
 
   // fetch uploaded list
   const [hitCall, setHitCall] = React.useState(false);
-  const { data } = useFetch(`${GLOBALS.API.FILES}${hitCall}`, "GET");
+  const { data } = useFetch(
+    hitCall ? `${GLOBALS.API.FILES}${hitCall}` : "",
+    "GET"
+  );
   const newData = data && data?.data?.data;
   React.useEffect(() => {
     if (newData?.length > 0) {
@@ -69,7 +73,7 @@ const UploadFile = (props) => {
     dispatch({ type: actions.LOADING_STATUS, payload: true });
     const formData = new FormData();
     formData.append("file", formValues?.file?.[0]);
-    if (openEditForm) {
+    if (selectedId?.id) {
       // handle update
       formData.append("id", selectedId?.id);
       const res = await updateTrigger(formData);
@@ -79,8 +83,6 @@ const UploadFile = (props) => {
       } else {
         notify(data, "danger");
       }
-      setOpenEditForm();
-      setSelectedId(null);
     } else {
       // handle new upload
       formData.append("user_id", formValues?.user_id);
@@ -92,6 +94,8 @@ const UploadFile = (props) => {
         notify(data, "danger");
       }
     }
+    setSelectedId(null);
+    setOpenEditForm(false);
     setHitCall(user?._id);
     reset();
     dispatch({ type: actions.LOADING_STATUS, payload: false });
@@ -129,9 +133,15 @@ const UploadFile = (props) => {
           </Fragment>
         ))}
       </div>
-      <Button type="submit" variant="outlined" size="large" sx={{ mb: 2 }}>
+      <LoadingButton
+        loading={isLoading}
+        type="submit"
+        fullWidth
+        variant="outlined"
+        sx={{ mb: 2, py: 2 }}
+      >
         Upload
-      </Button>
+      </LoadingButton>
     </Box>
   );
 };

@@ -20,7 +20,7 @@ export default function TableListing() {
 
   // fetch uploaded list
   const { data, error, isLoading } = useFetch(
-    `${GLOBALS.API.FILES}${user?._id}`,
+    user?._id ? `${GLOBALS.API.FILES}${user?._id}` : "",
     "GET"
   );
 
