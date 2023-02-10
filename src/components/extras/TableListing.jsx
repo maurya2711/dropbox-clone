@@ -20,11 +20,12 @@ export default function TableListing() {
 
   // fetch uploaded list
   const { data, error, isLoading } = useFetch(
-    user?._id ? `${GLOBALS.API.FILES}${user?._id}` : "",
+    GLOBALS.API.FILES,
+    user?._id,
     "GET"
   );
 
-  const newData = data && data?.data?.data;
+  const newData = data?.data;
   React.useEffect(() => {
     if (newData?.length > 0) {
       dispatch({ type: actions.UPLOADED_FILES, payload: newData });

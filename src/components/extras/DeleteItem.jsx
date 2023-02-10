@@ -20,11 +20,8 @@ const DeleteItem = (props) => {
 
   // fetch uploaded list
   const [hitCall, setHitCall] = React.useState(false);
-  const { data } = useFetch(
-    hitCall ? `${GLOBALS.API.FILES}${hitCall}` : "",
-    "GET"
-  );
-  const newData = data && data?.data?.data;
+  const { data } = useFetch(GLOBALS.API.FILES, hitCall, "GET");
+  const newData = data?.data;
   React.useEffect(() => {
     dispatch({ type: actions.UPLOADED_FILES, payload: newData });
     setHitCall(false);
