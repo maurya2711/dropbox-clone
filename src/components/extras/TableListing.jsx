@@ -32,17 +32,17 @@ export default function TableListing() {
   }, [newData]);
 
   // confirm deletion
-  const [openDialogValue, setOpenDialogValue] = React.useState(null);
+  const [openDialogValue, setOpenDialogValue] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState({
     id: null,
     type: null,
   });
 
   // confirm edit form
-  const [openEditForm, setOpenEditForm] = React.useState(null);
+  const [openEditForm, setOpenEditForm] = React.useState(false);
   const handleDialogEvent = () => {
-    setOpenDialogValue(null);
-    setOpenEditForm(null);
+    setOpenDialogValue(false);
+    setOpenEditForm(false);
   };
 
   if (isLoading) return <>Loading...</>;

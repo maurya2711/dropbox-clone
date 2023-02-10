@@ -20,11 +20,14 @@ const DeleteItem = (props) => {
 
   // fetch uploaded list
   const [hitCall, setHitCall] = React.useState(false);
-  const { data } = useFetch(`${GLOBALS.API.FILES}${hitCall}`, "GET");
+  const { data } = useFetch(
+    hitCall ? `${GLOBALS.API.FILES}${hitCall}` : "",
+    "GET"
+  );
   const newData = data && data?.data?.data;
   React.useEffect(() => {
     dispatch({ type: actions.UPLOADED_FILES, payload: newData });
-    setHitCall(null);
+    setHitCall(false);
   }, [newData]);
 
   const { trigger: deleteTrigger } = useMutation(
@@ -41,7 +44,7 @@ const DeleteItem = (props) => {
       const { data, status } = res;
       if (status >= 200 && status <= 201) {
         notify(data?.message, "info");
-        setOpenDialogValue(null);
+        setOpenDialogValue(false);
         setSelectedId(null);
       }
     }

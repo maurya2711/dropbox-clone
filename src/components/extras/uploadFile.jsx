@@ -1,17 +1,17 @@
 import React, { Fragment } from "react";
+import useFetch from "../../hooks/useFetch";
 import InputBox from "../UI Elements/InputBox";
 import notify from "../../utility/globals/notify";
 import useMutation from "../../hooks/useSwrMutation";
 import DragAndDrop from "../UI Elements/DragAndDrop";
 import fileUploadForm from "../Forms/fileUploadForm.json";
+import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, FormLabel, Button } from "@mui/material";
 import { GLOBALS } from "../../utility/globals/constants";
 import { FileSchema } from "../../utility/schema/FileSchema";
-import { Box, FormLabel, Button } from "@mui/material";
 import { actions, AuthContext } from "../../contexts/authContext";
-import useFetch from "../../hooks/useFetch";
-import { LoadingButton } from "@mui/lab";
 
 const UploadFile = (props) => {
   const { setOpenEditForm, selectedId, setSelectedId } = props;
@@ -59,45 +59,45 @@ const UploadFile = (props) => {
     if (newData?.length > 0) {
       dispatch({ type: actions.UPLOADED_FILES, payload: newData });
       setHitCall(null);
+      setOpenEditForm(false);
     }
   }, [newData]);
 
   // form submit event
   const beforeSubmit = async (formValues) => {
+    let res;
     if (!formValues?.file) {
       return setError("file", {
         type: "required",
         message: "This field is required",
       });
     }
+
     dispatch({ type: actions.LOADING_STATUS, payload: true });
     const formData = new FormData();
     formData.append("file", formValues?.file?.[0]);
+
     if (selectedId?.id) {
       // handle update
       formData.append("id", selectedId?.id);
-      const res = await updateTrigger(formData);
-      const { data, status } = res;
-      if (status >= 200 && status <= 201) {
-        notify(data?.message);
-      } else {
-        notify(data, "danger");
-      }
+      res = await updateTrigger(formData);
+      setSelectedId(null);
     } else {
       // handle new upload
       formData.append("user_id", formValues?.user_id);
-      const res = await uploadTrigger(formData);
-      const { data, status } = res;
-      if (status >= 200 && status <= 201) {
-        notify(data?.message);
-      } else {
-        notify(data, "danger");
-      }
+      res = await uploadTrigger(formData);
     }
-    setSelectedId(null);
-    setOpenEditForm(false);
-    setHitCall(user?._id);
+
+    const { data, status } = res;
+    if (status >= 200 && status <= 201) {
+      notify(data?.message);
+    } else {
+      notify(data, "danger");
+    }
+
     reset();
+    setHitCall(user?._id);
+    setOpenEditForm(false);
     dispatch({ type: actions.LOADING_STATUS, payload: false });
   };
   return (

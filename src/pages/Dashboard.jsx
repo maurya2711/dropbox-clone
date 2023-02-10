@@ -46,9 +46,9 @@ function DashboardContent() {
     dispatch({ type: actions.LOGOUT_SUCCESS });
   };
 
-  const [openEditForm, setOpenEditForm] = React.useState(null);
+  const [openEditForm, setOpenEditForm] = React.useState(false);
   const handleDialogEvent = () => {
-    setOpenEditForm(null);
+    setOpenEditForm(false);
   };
   return (
     <>
